@@ -99,47 +99,136 @@ cursor:pointer;
 
 .section{ margin-top:70px; }
 
+/* 🎉 PARTY BACKGROUND ANIMATION */
+.party-bg{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+overflow:hidden;
+}
+
+/* 🎈 Balloons */
+.balloon{
+position:absolute;
+width:60px;
+height:80px;
+border-radius:50%;
+opacity:0.7;
+animation: floatUp linear infinite;
+}
+
+.balloon::after{
+content:'';
+position:absolute;
+width:2px;
+height:40px;
+background:white;
+left:50%;
+top:80px;
+}
+
+@keyframes floatUp{
+0%{
+transform:translateY(100vh);
+opacity:0;
+}
+20%{opacity:1;}
+100%{
+transform:translateY(-120vh);
+opacity:0;
+}
+}
+
+/* ✨ Party Light Glow */
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:radial-gradient(circle at 20% 30%, rgba(255,255,255,0.2), transparent 40%),
+radial-gradient(circle at 80% 20%, rgba(255,255,255,0.2), transparent 40%),
+radial-gradient(circle at 50% 80%, rgba(255,255,255,0.2), transparent 40%);
+animation: glowMove 10s linear infinite;
+z-index:-2;
+}
+
+@keyframes glowMove{
+0%{transform:translateY(0);}
+50%{transform:translateY(-30px);}
+100%{transform:translateY(0);}
+}
+
+
 </style>
 </head>
 
 <body>
 
-<audio autoplay loop>
-<source src="song.mp3" type="audio/mpeg">
+<audio id="bgMusic" loop>
+  <source src="song.mp3" type="audio/mpeg">
 </audio>
+
+<button onclick="playMusic()" style="
+position:fixed;
+top:20px;
+right:20px;
+padding:10px 20px;
+border:none;
+border-radius:20px;
+background:#ff4d6d;
+color:white;
+font-weight:bold;
+cursor:pointer;
+">
+🎵 Play Music
+</button>
+
+<script>
+function playMusic(){
+ document.getElementById("bgMusic").play();
+}
+</script>
+
+
+<div class="party-bg" id="partyBg"></div>
 
 <div class="container">
 
-<h1>Happy Birthday My Love ❤️🎂</h1>
+<h1>Happy Birthday Apoorva 😼🎂</h1>
 
 <!-- 🐱 MANY CAT GIF MEMES -->
-<img src="cat1.gif" class="cat-gif cat1">
-<img src="cat2.gif" class="cat-gif cat2">
-<img src="cat3.gif" class="cat-gif cat3">
-<img src="cat4.gif" class="cat-gif cat4">
-<img src="cat5.gif" class="cat-gif cat5">
-<img src="cat6.gif" class="cat-gif cat6">
-<img src="cat7.gif" class="cat-gif cat7">
-<img src="cat8.gif" class="cat-gif cat8">
-<img src="cat9.gif" class="cat-gif cat9">
-<img src="cat10.gif" class="cat-gif cat10">
+<img src="C:\Users\ADMIN\birhday\cat1.gif" class="cat-gif cat1">
+<img src="C:\Users\ADMIN\birhday\cat2.gif" class="cat-gif cat2">
+<img src="C:\Users\ADMIN\birhday\cat3.gif" class="cat-gif cat3">
+<img src="C:\Users\ADMIN\birhday\cat4.gif" class="cat-gif cat4">
+<img src="C:\Users\ADMIN\birhday\cat5.gif" class="cat-gif cat5">
+<img src="C:\Users\ADMIN\birhday\cat6.gif" class="cat-gif cat6">
+<img src="C:\Users\ADMIN\birhday\cat7.gif" class="cat-gif cat7">
+<img src="C:\Users\ADMIN\birhday\cat8.gif" class="cat-gif cat8">
+<img src="C:\Users\ADMIN\birhday\cat9.gif" class="cat-gif cat9">
+<img src="C:\Users\ADMIN\birhday\cat10.gif" class="cat-gif cat10">
 
 <div class="photo-gallery">
-<img src="photo1.jpg">
-<img src="photo2.jpg">
-<img src="photo3.jpg">
+<img src="C:\Users\ADMIN\birhday\photo1.jpg.jpeg">
+<img src="C:\Users\ADMIN\birhday\photo2.jpg.jpeg">
+<img src="C:\Users\ADMIN\birhday\photo3.jpg.jpeg">
 </div>
 
 <!-- 🎂 CAKE -->
 <div class="cake-box">
-<div class="cake-text">🎂 Cut The Birthday Cake 🎂</div>
+<div class="cake-text">😼 Chal ab cake per click karke cake kat 🎂🥳</div>
 <div id="cake" class="cake" onclick="cutCake()">🎂</div>
 </div>
 
 <div class="section">
-<h2>Do You Love Me? ❤️</h2>
-<button id="yesBtn" onclick="yesClicked()">Yes 💖</button>
-<button id="noBtn">No 😈</button>
+<h2>Gift pasand aaya? 😋❤️</h2>
+<button id="yesBtn" onclick="yesClicked()">Haan bohot jyada 🥰💖</button>
+<button id="noBtn">🔔 kya bakwas hai 😈</button>
 </div>
 
 </div>
@@ -158,6 +247,28 @@ document.body.appendChild(c);
 setTimeout(()=>c.remove(),5000);
 }}
 window.onload=createConfetti;
+
+/* 🎈 CREATE BALLOONS */
+function createBalloons(){
+const colors=["#ff4d6d","#ffbe0b","#8338ec","#3a86ff","#06d6a0","#ff006e"];
+
+for(let i=0;i<25;i++){
+let b=document.createElement("div");
+b.className="balloon";
+b.style.left=Math.random()*100+"vw";
+b.style.background=colors[Math.floor(Math.random()*colors.length)];
+b.style.animationDuration=(Math.random()*6+6)+"s";
+b.style.animationDelay=Math.random()*5+"s";
+
+document.getElementById("partyBg").appendChild(b);
+}
+}
+
+window.onload=()=>{
+createConfetti();
+createBalloons();
+}
+
 
 /* CAKE CUT */
 function cutCake(){
